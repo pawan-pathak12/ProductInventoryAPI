@@ -1,3 +1,10 @@
-.vs/
 bin/
 obj/
+obj/Debug
+*.dll
+*.pdb
+*.cache
+*.log
+*.user
+.vs/
+appsettings.json
