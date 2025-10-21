@@ -2,8 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using ProductInventoryAPI.Data;
 using ProductInventoryAPI.Entities;
-using ProductInventoryAPI.Interfaces.Categorys;
-
+using ProductInventoryAPI.Interfaces;
 
 namespace ProductInventoryAPI.Repositories.Categorys
 {

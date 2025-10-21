@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Query.Internal;
 using ProductInventoryAPI.DTOs.Supplier;
 using ProductInventoryAPI.Entities;
-using ProductInventoryAPI.Interfaces.Supply;
+using ProductInventoryAPI.Interfaces;
 using System.Reflection.Metadata;
 
 namespace ProductInventoryAPI.Controller

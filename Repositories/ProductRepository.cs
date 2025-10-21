@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProductInventoryAPI.Data;
 using ProductInventoryAPI.Entities;
-using ProductInventoryAPI.Interfaces.Products;
+using ProductInventoryAPI.Interfaces;
 using System.Security.Principal;
 
-namespace ProductInventoryAPI.Repositories.Products
+namespace ProductInventoryAPI.Repositories
 {
     public class ProductRepository : IProductRepository
     {

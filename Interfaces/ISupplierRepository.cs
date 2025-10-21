@@ -1,7 +1,7 @@
 ﻿using ProductInventoryAPI.Entities;
 
 
-namespace ProductInventoryAPI.Interfaces.Supply
+namespace ProductInventoryAPI.Interfaces
 {
     public interface ISupplierRepository
     {

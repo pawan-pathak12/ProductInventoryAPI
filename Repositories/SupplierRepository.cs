@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProductInventoryAPI.Data;
 using ProductInventoryAPI.Entities;
-using ProductInventoryAPI.Interfaces.Supply;
+using ProductInventoryAPI.Interfaces;
 
-namespace ProductInventoryAPI.Repositories.Supply
+namespace ProductInventoryAPI.Repositories
 {
     public class SupplierRepository : ISupplierRepository
     {
@@ -11,7 +11,7 @@ namespace ProductInventoryAPI.Repositories.Supply
 
         public SupplierRepository(ApplicationDbContext context)
         {
-            this._context = context;
+            _context = context;
         }
         public async Task<Supplier> AddSupplier(Supplier supplier)
         {

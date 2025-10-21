@@ -2,7 +2,7 @@
 using ProductInventoryAPI.DTOs.Supplier;
 using ProductInventoryAPI.Entities;
 
-namespace ProductInventoryAPI.Mapping.Supply
+namespace ProductInventoryAPI.Mapping
 {
     public class SupplierMapping:Profile
     {

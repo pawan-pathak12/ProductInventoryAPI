@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using ProductInventoryAPI.DTOs.Product;
 using ProductInventoryAPI.Entities;
-using ProductInventoryAPI.Interfaces.Products;
+using ProductInventoryAPI.Interfaces;
 
 namespace ProductInventoryAPI.Controller
 {

@@ -2,7 +2,7 @@
 using ProductInventoryAPI.DTOs.Product;
 using ProductInventoryAPI.Entities;
 
-namespace ProductInventoryAPI.Mapping.Products
+namespace ProductInventoryAPI.Mapping
 {
     public class ProductProfile:Profile
     {

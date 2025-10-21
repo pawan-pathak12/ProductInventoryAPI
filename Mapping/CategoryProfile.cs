@@ -2,7 +2,7 @@
 using ProductInventoryAPI.DTOs.Category;
 using ProductInventoryAPI.Entities;
 
-namespace ProductInventoryAPI.Mapping.Categorys
+namespace ProductInventoryAPI.Mapping
 {
     public class CategoryProfile:Profile
     {

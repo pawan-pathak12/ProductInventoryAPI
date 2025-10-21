@@ -1,6 +1,6 @@
 ﻿using ProductInventoryAPI.Entities;
 
-namespace ProductInventoryAPI.Interfaces.Products
+namespace ProductInventoryAPI.Interfaces
 {
     public interface IProductRepository
     {
