@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using ProductInventoryAPI.DTOs.Category;
 using ProductInventoryAPI.Entities;
@@ -14,7 +14,7 @@ namespace ProductInventoryAPI.Controller
         private readonly ICategoryRepository _repository;
         private readonly IMapper _mapper;
 
-        public CategoryController(ICategoryRepository repository,IMapper mapper)
+        public CategoryController(ICategoryRepository repository, IMapper mapper)
         {
             this._repository = repository;
             this._mapper = mapper;
@@ -34,6 +34,7 @@ namespace ProductInventoryAPI.Controller
             var response = _mapper.Map<IEnumerable<CategoryResponseDTO>>(category);
             return Ok(response);
         }
+        #region Update
         [HttpPut]
         public async Task<IActionResult> UpdateCategory(int id, [FromBody] UpdateCategoryDTO update)
         {
@@ -42,11 +43,22 @@ namespace ProductInventoryAPI.Controller
             {
                 return NotFound($"Category with id {id} not found.");
             }
-               _mapper.Map(update, existingProduct);
+            _mapper.Map(update, existingProduct);
             await _repository.UpdateCategory(existingProduct);
             return Ok("Category Updated Successfully");
 
         }
+
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> UpdatePatch([FromRoute] int id, [FromBody] JsonPatchDocument patchDocument)
+        {
+            await _repository.UpdatePatchAsync(id, patchDocument);
+            return Ok("Updated Successfully");
+
+        }
+
+        #endregion
+
         [HttpDelete]
         public async Task<IActionResult> DeleteCategory(int id)
         {
@@ -58,5 +70,7 @@ namespace ProductInventoryAPI.Controller
             await _repository.DeleteCategoryAsync(result);
             return Ok("Category Deleted Sucessfully");
         }
+
+
     }
 }

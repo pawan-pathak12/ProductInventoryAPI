@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Http.HttpResults;
+﻿using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.EntityFrameworkCore;
 using ProductInventoryAPI.Data;
 using ProductInventoryAPI.Entities;
@@ -6,7 +6,7 @@ using ProductInventoryAPI.Interfaces;
 
 namespace ProductInventoryAPI.Repositories.Categorys
 {
-    public class CategoryRepository :ICategoryRepository
+    public class CategoryRepository : ICategoryRepository
     {
         private readonly ApplicationDbContext _context;
 
@@ -24,13 +24,13 @@ namespace ProductInventoryAPI.Repositories.Categorys
         }
         public async Task<IEnumerable<Category>> GetAllCategories()
         {
-        return   await _context.Categories.ToListAsync();
+            return await _context.Categories.ToListAsync();
 
         }
 
         public async Task<Category> GetCategoryById(int id)
         {
-          return  await _context.Categories.FirstOrDefaultAsync(x=>x.Id==id);
+            return await _context.Categories.FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<Category> UpdateCategory(Category category)
@@ -42,12 +42,23 @@ namespace ProductInventoryAPI.Repositories.Categorys
         public async Task DeleteCategoryAsync(Category category)
         {
             var a = await _context.Categories.FindAsync(category.Id);
-            if(category!=null)
+            if (category != null)
             {
                 _context.Categories.Remove(a);
                 await _context.SaveChangesAsync();
             }
-            
+
+        }
+
+        public async Task UpdatePatchAsync(int id, JsonPatchDocument jsonPatch)
+        {
+            var category = await _context.Categories.FirstOrDefaultAsync(x => x.Id == id);
+            if (category != null)
+            {
+                jsonPatch.ApplyTo(category);
+                await _context.SaveChangesAsync();
+            }
+
         }
     }
 }
