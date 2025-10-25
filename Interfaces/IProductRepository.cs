@@ -1,4 +1,6 @@
-﻿using ProductInventoryAPI.Entities;
+﻿
+using Microsoft.AspNetCore.JsonPatch;
+using ProductInventoryAPI.Entities;
 
 namespace ProductInventoryAPI.Interfaces
 {
@@ -8,6 +10,7 @@ namespace ProductInventoryAPI.Interfaces
         Task<Product> GetProductById(int id);
         Task<Product> AddProductAsync(Product product);
         Task<Product> UpdateProductAsync(Product product);
+        Task UpdateProductpatch(int id, JsonPatchDocument patchDocument);
         Task DeleteAsync(Product product);
 
     }

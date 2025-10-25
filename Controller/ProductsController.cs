@@ -1,5 +1,5 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using ProductInventoryAPI.DTOs.Product;
 using ProductInventoryAPI.Entities;
@@ -14,7 +14,7 @@ namespace ProductInventoryAPI.Controller
         private readonly IProductRepository _productRepository;
         private readonly IMapper _mapper;
 
-        public ProductsController(IProductRepository productRepository ,IMapper mapper)
+        public ProductsController(IProductRepository productRepository, IMapper mapper)
         {
             this._productRepository = productRepository;
             this._mapper = mapper;
@@ -31,7 +31,7 @@ namespace ProductInventoryAPI.Controller
         public async Task<IActionResult> GEtProductById(int id)
         {
             var product = await _productRepository.GetProductById(id);
-            if(product==null)
+            if (product == null)
             {
                 return NotFound();
             }
@@ -49,10 +49,10 @@ namespace ProductInventoryAPI.Controller
 
         }
         [HttpPut]
-        public async Task<IActionResult> UpdateProduct(int id ,[FromBody] UpdateProductDTO updatedata)
+        public async Task<IActionResult> UpdateProduct(int id, [FromBody] UpdateProductDTO updatedata)
         {
             var existinProduct = await _productRepository.GetProductById(id);
-            if(existinProduct==null)
+            if (existinProduct == null)
             {
                 return NotFound($"Product with id {id} not found.");
             }
@@ -65,13 +65,19 @@ namespace ProductInventoryAPI.Controller
         public async Task<IActionResult> DeleteProduct(int id)
         {
             var product = await _productRepository.GetProductById(id);
-            if(product==null)
+            if (product == null)
             {
                 return NotFound($"Product with id {id} not found.");
-                
+
             }
             await _productRepository.DeleteAsync(product);
             return NoContent();
+        }
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> Updatepatch(int id, JsonPatchDocument jsonPatchDocument)
+        {
+            await _productRepository.UpdateProductpatch(id, jsonPatchDocument);
+            return Ok("Update is successful");
         }
     }
 }

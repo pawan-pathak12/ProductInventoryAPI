@@ -2,7 +2,6 @@
 using ProductInventoryAPI.Data;
 using ProductInventoryAPI.Entities;
 using ProductInventoryAPI.Interfaces;
-using System.Security.Principal;
 
 namespace ProductInventoryAPI.Repositories
 {
@@ -39,7 +38,7 @@ namespace ProductInventoryAPI.Repositories
         public async Task DeleteAsync(Product products)
         {
             var product = await _context.Products.FindAsync(products.Id);
-            if(product!=null)
+            if (product != null)
             {
                 _context.Products.Remove(product);
                 await _context.SaveChangesAsync();
@@ -47,6 +46,17 @@ namespace ProductInventoryAPI.Repositories
 
         }
 
+
+
+        public async Task UpdateProductpatch(int id, Microsoft.AspNetCore.JsonPatch.JsonPatchDocument patchDocument)
+        {
+            var category = await _context.Categories.FirstOrDefaultAsync(x => x.Id == id);
+            if (category != null)
+            {
+                patchDocument.ApplyTo(category);
+                await _context.SaveChangesAsync();
+            }
+        }
 
     }
 }
