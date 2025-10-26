@@ -1,11 +1,9 @@
 ﻿using AutoMapper;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore.Query.Internal;
 using ProductInventoryAPI.DTOs.Supplier;
 using ProductInventoryAPI.Entities;
 using ProductInventoryAPI.Interfaces;
-using System.Reflection.Metadata;
 
 namespace ProductInventoryAPI.Controller
 {
@@ -41,7 +39,7 @@ namespace ProductInventoryAPI.Controller
         public async Task<IActionResult> GetSupplierById(int id)
         {
             var supplier = await _repository.GetAllSuppliersById(id);
-            if(supplier==null)
+            if (supplier == null)
             {
                 return NotFound();
             }
@@ -49,11 +47,11 @@ namespace ProductInventoryAPI.Controller
             return Ok(response);
         }
         [HttpPut]
-        public async Task<IActionResult> Updatesupplier(int id ,[FromBody] UpdateSupplierDTO updateSupplier)
+        public async Task<IActionResult> Updatesupplier(int id, [FromBody] UpdateSupplierDTO updateSupplier)
         {
 
             var existingSupplier = await _repository.GetAllSuppliersById(id);
-            if(existingSupplier==null)
+            if (existingSupplier == null)
             {
                 return NotFound("Suppliet dont exist");
             }
@@ -62,15 +60,23 @@ namespace ProductInventoryAPI.Controller
             return Ok("Supplier Updated Sucessfully");
         }
         [HttpDelete]
-        public async Task<IActionResult> DeleteSupplier( int id )
+        public async Task<IActionResult> DeleteSupplier(int id)
         {
             var supplier = await _repository.GetAllSuppliersById(id);
-            if(supplier==null)
+            if (supplier == null)
             {
                 return NotFound("Supplier dont exists");
             }
             await _repository.DeleteSupplier(supplier);
             return Ok("Supplier deleted Successfully");
+        }
+
+        [HttpPatch("{id}")]
+        public async Task<IActionResult> UpdatePatch([FromRoute] int id, JsonPatchDocument jsonPatchDocument)
+        {
+            await _repository.UpdateSupplierPatch(id, jsonPatchDocument);
+            return Ok("Updated patially successfully");
+
         }
     }
 }

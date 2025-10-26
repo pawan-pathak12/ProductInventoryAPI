@@ -33,20 +33,30 @@ namespace ProductInventoryAPI.Repositories
         public async Task<Supplier> UpdateSupplier(Supplier supplier)
         {
             var a = await _context.Suppliers.FindAsync(supplier.Id);
-            if(a!=null)
+            if (a != null)
             {
                 _context.Entry(a).CurrentValues.SetValues(supplier);
                 await _context.SaveChangesAsync();
             }
             return supplier;
         }
-        public async  Task DeleteSupplier(Supplier supplier)
+        public async Task DeleteSupplier(Supplier supplier)
         {
             var a = await _context.Suppliers.FindAsync(supplier.Id);
-            if(a!=null)
+            if (a != null)
             {
                 _context.Suppliers.Remove(a);
                 _context.SaveChangesAsync();
+            }
+        }
+
+        public async Task UpdateSupplierPatch(int id, Microsoft.AspNetCore.JsonPatch.JsonPatchDocument patchDocument)
+        {
+            var category = await _context.Categories.FirstOrDefaultAsync(x => x.Id == id);
+            if (category != null)
+            {
+                patchDocument.ApplyTo(category);
+                await _context.SaveChangesAsync();
             }
         }
     }
